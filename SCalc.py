@@ -1912,7 +1912,7 @@ ttk.Button(frame_button, text="7", style = "One.TButton", command=lambda: add_di
 ttk.Button(frame_button, text="8", style = "One.TButton", command=lambda: add_digit(8)).place(x=83, y=227, width=81, height=53)
 ttk.Button(frame_button, text="9", style = "One.TButton", command=lambda: add_digit(9)).place(x=164, y=227, width=81, height=53)
 
-
+#Это новый коментарий!
 root.mainloop()
 
 
