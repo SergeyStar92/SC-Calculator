@@ -3,6 +3,13 @@ from tkinter import *
 from tkinter import ttk
 from math import sqrt
 
+text_final_result = ''
+text_res_calc = ''
+text_calc = ''
+
+final_result = ''
+res_calc = ''
+
 num = ['0']
 write_scr = ['0']
 write_result = []
@@ -438,7 +445,6 @@ def dot(dott):
         dotted = True
 
     if dotted == False:
-        print(f'10 - {num}')
         if num[0] == '0':
             num = []
             write_scr = []
@@ -452,8 +458,6 @@ def dot(dott):
         text_calc.set(f"{''.join(num)}")
         dotted = True
     font_style()
-
-
 
 
 def add_operation(operation):
@@ -577,7 +581,6 @@ def rawno():
                 else:
                     break
             num = num[::-1]
-            print(f'Сейчас тут 1 - {num}')
             for i in num:
                 if i not in '+-*/':
                     not_sqr_num_1 = i + not_sqr_num_1
@@ -600,7 +603,6 @@ def rawno():
                     num = num[:-1]
                 else:
                     break
-            print(f'Сейчас тут 2 - {num}')
             for i in num:
                 if i not in '+-*/':
                     not_sqr_num_2 = i + not_sqr_num_2
@@ -768,7 +770,6 @@ def rawno():
 #смешанный вывод корней и квадратов и 1/x <-------/////////////////////////////////////////////////////////////////////////<--------!!!
 
         if (mark_sqr_1 == True or oper_mark_sqr_1 == True) and mark_sqrt_2 == True and mark_sqrt_1 == False and mark_onedevx_1 == False and mark_onedevx_2 == False and oper_mark_onedevx_1 == False and oper_mark_sqrt_1 == False:
-            print(f'Зашли сюда сюда 5 - {oper_mark_sqr_1}, num{num}')
             if num.count('+') > 0:
                 text_final_result.set(f"({sqr_num_1})² + √({sqrt_num_2}) =")
             if num.count('-') > 0:
@@ -1765,26 +1766,19 @@ def press_key(event):
 
 root = Tk()
 root.title("Калькулятор")
-w, h = 328, 440
+w, h = 328, 460
 root.geometry(f'{w}x{h}+{(root.winfo_screenwidth()-w)//2}+{(root.winfo_screenheight()-h) // 2}')
 root.iconbitmap('icon.ico')
 root.resizable(width=False, height=False)
-
-
 root.bind('<Key>', press_key)
 
-text_final_result = StringVar()
-text_res_calc = StringVar()
-text_calc = StringVar()
+main_menu = Menu(root)
+root.config(menu=main_menu)
 
-text_final_result.set(f'')
-text_calc.set(f"0")
-text_res_calc.set(f"0")
-
-frame_finnaly = Frame(root).place(x=0, y=0, width=328, height=40)
-frame_num = Frame(root).place(x=0, y=40, width=328, height=80)
-frame_button = Frame(root).place(x=0, y=120, width=328, height=320)
-
+working_mode = Menu(main_menu, tearoff=0)
+main_menu.add_cascade(label='Режим', menu=working_mode)
+working_mode.add_command(label="Стандартный", command=lambda :start_mode())
+working_mode.add_command(label="Системы счисления", command=lambda :second_mode())
 
 def font_style():
     global mark_error
@@ -1861,57 +1855,151 @@ def font_style():
             res_calc.config(font=("Arial", 20))
         mark_font_sqr = False
 
-
     if mark_error == True:
         res_calc.config(font=("Arial", 15))
         mark_error = False
 
+def clear_screen():
+    for i in root.winfo_children():
+        print(type(str(i)))
+        if str(i) == '.!menu':
+            pass
+        else:
+            i.destroy()
 
-final_result = ttk.Label(frame_finnaly, text='0', style = "Nine.TButton", textvariable=text_final_result, font=("Arial", 13), anchor=SE).place(x=1, y=1, width=326, height=38)
-res_calc = ttk.Label(frame_num, text="0", style = "Eight.TButton", textvariable=text_res_calc, font=("Arial", 36), anchor=SE)
-res_calc.place(x=1, y=41, width=326, height=78)
+def start_mode():
+    clear_screen()
+    global final_result
+    global res_calc
+    global text_final_result
+    global text_res_calc
+    global text_calc
 
-#<------------!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!-------------------------------|
-# calc = Label(textvariable=text_calc, font=("Arial", 22)).grid(column=0, columnspan=4, row=2, ipady=5, sticky=E)
-#<^^^^^^^^^^^^!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
+    text_final_result = StringVar()
+    text_res_calc = StringVar()
+    text_calc = StringVar()
 
-oper_btn_style = ttk.Style()
-oper_btn_style.configure("One.TButton", font = 'Arial 19', foreground = '#454545' )
-oper_btn_style.configure("Two.TButton", font = 'Arial 16 bold', foreground = '#e61919' )
-oper_btn_style.configure("Three.TButton", font = 'Arial 30', foreground = '#009aff' )
-oper_btn_style.configure("Four.TButton", font = 'Arial 11', foreground = '#358d24' )
-oper_btn_style.configure("Six.TButton", font = 'Arial 30', foreground = '#e61919' )
-oper_btn_style.configure("Seven.TButton", font = 'Arial 14', foreground = '#721294' )
-oper_btn_style.configure("Eight.TButton", font = 'Arial 14', foreground = '#004bcf' )
-oper_btn_style.configure("Nine.TButton", font = 'Arial 14', foreground = '#116062' )
-oper_btn_style.configure("Ten.TButton", font = 'Arial 14 bold', foreground = '#721294' )
+    text_final_result.set(f'')
+    text_calc.set(f"0")
+    text_res_calc.set(f"0")
 
-ttk.Button(frame_button, text="+", style = "Six.TButton", command=lambda: add_operation('+')).place(x=245, y=333, width=81, height=53)
-ttk.Button(frame_button, text="—", style = "Two.TButton",command=lambda: add_operation('-')).place(x=245, y=280, width=81, height=53)
-ttk.Button(frame_button, text="✕", style = "Two.TButton",command=lambda: add_operation('*')).place(x=245, y=227, width=81, height=53)
-ttk.Button(frame_button, text="÷", style = "Six.TButton",command=lambda: add_operation('/')).place(x=245, y=174, width=81, height=53)
-ttk.Button(frame_button, text="√x", style = "Four.TButton", command=lambda: btsqrt()).place(x=164, y=174, width=81, height=53)
-ttk.Button(frame_button, text="x²", style = "Four.TButton", command=lambda: square()).place(x=83, y=174, width=81, height=53)
-ttk.Button(frame_button, text="1/x", style = "Four.TButton", command=lambda: onedevx()).place(x=2, y=174, width=81, height=53)
-ttk.Button(frame_button, text="=", style = "Three.TButton",command=lambda: rawno()).place(x=245, y=386, width=81, height=53)
-ttk.Button(frame_button, text=".", style = "One.TButton", command=lambda: dot('.')).place(x=164, y=386, width=81, height=53)
-ttk.Button(frame_button, text="+/-", style = "One.TButton", command=lambda: znak()).place(x=2, y=386, width=81, height=53)
-ttk.Button(frame_button, text="⌫", style = "Ten.TButton", command=lambda: backspase()).place(x=245, y=121, width=81, height=53)
-ttk.Button(frame_button, text="C", style = "Seven.TButton", command=lambda: clear()).place(x=164, y=121, width=81, height=53)
-ttk.Button(frame_button, text="CE", style = "Seven.TButton", command=lambda: CE()).place(x=83, y=121, width=81, height=53)
-ttk.Button(frame_button, text="%", style = "Four.TButton", command=lambda: percent()).place(x=2, y=121, width=81, height=53)
+    frame_finnaly = Frame(root).place(x=0, y=0, width=328, height=40)
+    frame_num = Frame(root).place(x=0, y=40, width=328, height=80)
+    frame_button = Frame(root).place(x=0, y=120, width=328, height=320)
 
-ttk.Button(frame_button, text="0", style = "One.TButton", command=lambda: add_digit(0)).place(x=83, y=386, width=81, height=53)
-ttk.Button(frame_button, text="1", style = "One.TButton", command=lambda: add_digit(1)).place(x=2, y=333, width=81, height=53)
-ttk.Button(frame_button, text="2", style = "One.TButton", command=lambda: add_digit(2)).place(x=83, y=333, width=81, height=53)
-ttk.Button(frame_button, text="3", style = "One.TButton", command=lambda: add_digit(3)).place(x=164, y=333, width=81, height=53)
-ttk.Button(frame_button, text="4", style = "One.TButton", command=lambda: add_digit(4)).place(x=2, y=280, width=81, height=53)
-ttk.Button(frame_button, text="5", style = "One.TButton", command=lambda: add_digit(5)).place(x=83, y=280, width=81, height=53)
-ttk.Button(frame_button, text="6", style = "One.TButton", command=lambda: add_digit(6)).place(x=164, y=280, width=81, height=53)
-ttk.Button(frame_button, text="7", style = "One.TButton", command=lambda: add_digit(7)).place(x=2, y=227, width=81, height=53)
-ttk.Button(frame_button, text="8", style = "One.TButton", command=lambda: add_digit(8)).place(x=83, y=227, width=81, height=53)
-ttk.Button(frame_button, text="9", style = "One.TButton", command=lambda: add_digit(9)).place(x=164, y=227, width=81, height=53)
+    final_result = ttk.Label(frame_finnaly, text='0', style="Nine.TButton", textvariable=text_final_result, font=("Arial", 13), anchor=SE).place(x=1, y=1, width=326, height=38)
+    res_calc = ttk.Label(frame_num, text="0", style="Eight.TButton", textvariable=text_res_calc, font=("Arial", 36), anchor=SE)
+    res_calc.place(x=1, y=41, width=326, height=78)
 
+    # <------------!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!-------------------------------|
+    # calc = Label(textvariable=text_calc, font=("Arial", 22)).grid(column=0, columnspan=4, row=2, ipady=5, sticky=E)
+    # <^^^^^^^^^^^^!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
+
+    oper_btn_style = ttk.Style()
+    oper_btn_style.configure("One.TButton", font = 'Arial 19', foreground = '#454545' )
+    oper_btn_style.configure("Two.TButton", font = 'Arial 16 bold', foreground = '#e61919' )
+    oper_btn_style.configure("Three.TButton", font = 'Arial 30', foreground = '#009aff' )
+    oper_btn_style.configure("Four.TButton", font = 'Arial 11', foreground = '#358d24' )
+    oper_btn_style.configure("Six.TButton", font = 'Arial 30', foreground = '#e61919' )
+    oper_btn_style.configure("Seven.TButton", font = 'Arial 14', foreground = '#721294' )
+    oper_btn_style.configure("Eight.TButton", font = 'Arial 14', foreground = '#004bcf' )
+    oper_btn_style.configure("Nine.TButton", font = 'Arial 14', foreground = '#116062' )
+    oper_btn_style.configure("Ten.TButton", font = 'Arial 14 bold', foreground = '#721294' )
+
+    ttk.Button(frame_button, text="+", style = "Six.TButton", command=lambda: add_operation('+')).place(x=245, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="—", style = "Two.TButton",command=lambda: add_operation('-')).place(x=245, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="✕", style = "Two.TButton",command=lambda: add_operation('*')).place(x=245, y=227, width=81, height=53)
+    ttk.Button(frame_button, text="÷", style = "Six.TButton",command=lambda: add_operation('/')).place(x=245, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="√x", style = "Four.TButton", command=lambda: btsqrt()).place(x=164, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="x²", style = "Four.TButton", command=lambda: square()).place(x=83, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="1/x", style = "Four.TButton", command=lambda: onedevx()).place(x=2, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="=", style = "Three.TButton",command=lambda: rawno()).place(x=245, y=386, width=81, height=53)
+    ttk.Button(frame_button, text=".", style = "One.TButton", command=lambda: dot('.')).place(x=164, y=386, width=81, height=53)
+    ttk.Button(frame_button, text="+/-", style = "One.TButton", command=lambda: znak()).place(x=2, y=386, width=81, height=53)
+    ttk.Button(frame_button, text="⌫", style = "Ten.TButton", command=lambda: backspase()).place(x=245, y=121, width=81, height=53)
+    ttk.Button(frame_button, text="C", style = "Seven.TButton", command=lambda: clear()).place(x=164, y=121, width=81, height=53)
+    ttk.Button(frame_button, text="CE", style = "Seven.TButton", command=lambda: CE()).place(x=83, y=121, width=81, height=53)
+    ttk.Button(frame_button, text="%", style = "Four.TButton", command=lambda: percent()).place(x=2, y=121, width=81, height=53)
+
+    ttk.Button(frame_button, text="0", style = "One.TButton", command=lambda: add_digit(0)).place(x=83, y=386, width=81, height=53)
+    ttk.Button(frame_button, text="1", style = "One.TButton", command=lambda: add_digit(1)).place(x=2, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="2", style = "One.TButton", command=lambda: add_digit(2)).place(x=83, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="3", style = "One.TButton", command=lambda: add_digit(3)).place(x=164, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="4", style = "One.TButton", command=lambda: add_digit(4)).place(x=2, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="5", style = "One.TButton", command=lambda: add_digit(5)).place(x=83, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="6", style = "One.TButton", command=lambda: add_digit(6)).place(x=164, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="7", style = "One.TButton", command=lambda: add_digit(7)).place(x=2, y=227, width=81, height=53)
+    ttk.Button(frame_button, text="8", style = "One.TButton", command=lambda: add_digit(8)).place(x=83, y=227, width=81, height=53)
+    ttk.Button(frame_button, text="9", style = "One.TButton", command=lambda: add_digit(9)).place(x=164, y=227, width=81, height=53)
+
+
+def second_mode():
+    clear_screen()
+    global final_result
+    global res_calc
+    global text_final_result
+    global text_res_calc
+    global text_calc
+
+    text_final_result = StringVar()
+    text_res_calc = StringVar()
+    text_calc = StringVar()
+
+    text_final_result.set(f'')
+    text_calc.set(f"0")
+    text_res_calc.set(f"0")
+
+    frame_finnaly = Frame(root).place(x=0, y=0, width=328, height=40)
+    frame_num = Frame(root).place(x=0, y=40, width=328, height=80)
+    frame_button = Frame(root).place(x=0, y=120, width=328, height=320)
+
+    final_result = ttk.Label(frame_finnaly, text='0', style="Nine.TButton", textvariable=text_final_result, font=("Arial", 13), anchor=SE).place(x=1, y=1, width=326, height=38)
+    res_calc = ttk.Label(frame_num, text="0", style="Eight.TButton", textvariable=text_res_calc, font=("Arial", 36), anchor=SE)
+    res_calc.place(x=1, y=41, width=326, height=78)
+
+    # <------------!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!-------------------------------|
+    # calc = Label(textvariable=text_calc, font=("Arial", 22)).grid(column=0, columnspan=4, row=2, ipady=5, sticky=E)
+    # <^^^^^^^^^^^^!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
+
+    oper_btn_style = ttk.Style()
+    oper_btn_style.configure("OneT.TButton", font = 'Arial 19')
+    oper_btn_style.configure("TwoT.TButton", font = 'Arial 16 bold')
+    oper_btn_style.configure("ThreeT.TButton", font = 'Arial 30')
+    oper_btn_style.configure("FourT.TButton", font = 'Arial 11')
+    oper_btn_style.configure("SixT.TButton", font = 'Arial 30')
+    oper_btn_style.configure("SevenT.TButton", font = 'Arial 14')
+    oper_btn_style.configure("EightT.TButton", font = 'Arial 14')
+    oper_btn_style.configure("NineT.TButton", font = 'Arial 14')
+    oper_btn_style.configure("TenT.TButton", font = 'Arial 14 bold')
+
+    ttk.Button(frame_button, text="+", style = "SixT.TButton", command=lambda: add_operation('+')).place(x=245, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="—", style = "TwoT.TButton",command=lambda: add_operation('-')).place(x=245, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="✕", style = "TwoT.TButton",command=lambda: add_operation('*')).place(x=245, y=227, width=81, height=53)
+    ttk.Button(frame_button, text="÷", style = "SixT.TButton",command=lambda: add_operation('/')).place(x=245, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="√x", style = "FourT.TButton", command=lambda: btsqrt()).place(x=164, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="x²", style = "FourT.TButton", command=lambda: square()).place(x=83, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="1/x", style = "FourT.TButton", command=lambda: onedevx()).place(x=2, y=174, width=81, height=53)
+    ttk.Button(frame_button, text="=", style = "ThreeT.TButton",command=lambda: rawno()).place(x=245, y=386, width=81, height=53)
+    ttk.Button(frame_button, text=".", style = "OneT.TButton", command=lambda: dot('.')).place(x=164, y=386, width=81, height=53)
+    ttk.Button(frame_button, text="+/-", style = "OneT.TButton", command=lambda: znak()).place(x=2, y=386, width=81, height=53)
+    ttk.Button(frame_button, text="⌫", style = "TenT.TButton", command=lambda: backspase()).place(x=245, y=121, width=81, height=53)
+    ttk.Button(frame_button, text="C", style = "SevenT.TButton", command=lambda: clear()).place(x=164, y=121, width=81, height=53)
+    ttk.Button(frame_button, text="CE", style = "SevenT.TButton", command=lambda: CE()).place(x=83, y=121, width=81, height=53)
+    ttk.Button(frame_button, text="%", style = "FourT.TButton", command=lambda: percent()).place(x=2, y=121, width=81, height=53)
+
+    ttk.Button(frame_button, text="0", style = "OneT.TButton", command=lambda: add_digit(0)).place(x=83, y=386, width=81, height=53)
+    ttk.Button(frame_button, text="1", style = "OneT.TButton", command=lambda: add_digit(1)).place(x=2, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="2", style = "OneT.TButton", command=lambda: add_digit(2)).place(x=83, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="3", style = "OneT.TButton", command=lambda: add_digit(3)).place(x=164, y=333, width=81, height=53)
+    ttk.Button(frame_button, text="4", style = "OneT.TButton", command=lambda: add_digit(4)).place(x=2, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="5", style = "OneT.TButton", command=lambda: add_digit(5)).place(x=83, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="6", style = "OneT.TButton", command=lambda: add_digit(6)).place(x=164, y=280, width=81, height=53)
+    ttk.Button(frame_button, text="7", style = "OneT.TButton", command=lambda: add_digit(7)).place(x=2, y=227, width=81, height=53)
+    ttk.Button(frame_button, text="8", style = "OneT.TButton", command=lambda: add_digit(8)).place(x=83, y=227, width=81, height=53)
+    ttk.Button(frame_button, text="9", style = "OneT.TButton", command=lambda: add_digit(9)).place(x=164, y=227, width=81, height=53)
+
+
+start_mode()
 #Это новый коментарий!
 #это новый коментарий в новой ветке number-systems
 root.mainloop()
