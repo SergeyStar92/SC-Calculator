@@ -1944,21 +1944,33 @@ def second_mode():
     text_res_calc = StringVar()
     text_calc = StringVar()
 
+    rad_but = IntVar()
+    rad_but.set(1)
+
     text_final_result.set(f'')
     text_calc.set(f"0")
     text_res_calc.set(f"0")
 
-    frame_finnaly = Frame(root).place(x=0, y=0, width=328, height=40)
-    frame_num = Frame(root).place(x=0, y=40, width=328, height=80)
-    frame_button = Frame(root).place(x=0, y=120, width=328, height=320)
+    frame_finnaly = Frame(root, background="red").place(x=0, y=0, width=328, height=40)
+    frame_num = Frame(root, background="green").place(x=0, y=40, width=328, height=170)
+    frame_button = Frame(root, background="blue").place(x=0, y=210, width=328, height=230)
 
     final_result = ttk.Label(frame_finnaly, text='0', style="Nine.TButton", textvariable=text_final_result, font=("Arial", 13), anchor=SE).place(x=1, y=1, width=326, height=38)
     res_calc = ttk.Label(frame_num, text="0", style="Eight.TButton", textvariable=text_res_calc, font=("Arial", 36), anchor=SE)
     res_calc.place(x=1, y=41, width=326, height=58)
 
     # <------------!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!-------------------------------|
-    # calc = Label(textvariable=text_calc, font=("Arial", 22)).grid(column=0, columnspan=4, row=2, ipady=5, sticky=E)
+    calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=101, width=326, height=17)
     # <^^^^^^^^^^^^!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
+
+    dec_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=118, width=280, height=17)
+    bin_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=135, width=280, height=17)
+    oct_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=152, width=280, height=17)
+    hex_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=169, width=280, height=17)
+    dec_rad = ttk.Radiobutton(frame_num, text='DEC', variable=rad_but, value=0).place(x=280, y=118, width=47, height=17)
+    bin_rad = ttk.Radiobutton(frame_num, text='BIN', variable=rad_but,value=1).place(x=280, y=135, width=47, height=17)
+    oct_rad = ttk.Radiobutton(frame_num, text='OCT', variable=rad_but,value=2).place(x=280, y=152, width=47, height=17)
+    hex_rad = ttk.Radiobutton(frame_num, text='HEX', variable=rad_but,value=3).place(x=280, y=169, width=47, height=17)
 
     oper_btn_style = ttk.Style()
     oper_btn_style.configure("OneT.TButton", font = 'Arial 19')
