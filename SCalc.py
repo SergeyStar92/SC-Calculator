@@ -1772,6 +1772,9 @@ root.iconbitmap('icon.ico')
 root.resizable(width=False, height=False)
 root.bind('<Key>', press_key)
 
+rad_but = IntVar()
+rad_but.set(0)
+
 main_menu = Menu(root)
 root.config(menu=main_menu)
 
@@ -1944,9 +1947,6 @@ def second_mode():
     text_res_calc = StringVar()
     text_calc = StringVar()
 
-    rad_but = IntVar()
-    rad_but.set(1)
-
     text_final_result.set(f'')
     text_calc.set(f"0")
     text_res_calc.set(f"0")
@@ -1968,9 +1968,9 @@ def second_mode():
     oct_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=152, width=280, height=17)
     hex_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=169, width=280, height=17)
     dec_rad = ttk.Radiobutton(frame_num, text='DEC', variable=rad_but, value=0).place(x=280, y=118, width=47, height=17)
-    bin_rad = ttk.Radiobutton(frame_num, text='BIN', variable=rad_but,value=1).place(x=280, y=135, width=47, height=17)
-    oct_rad = ttk.Radiobutton(frame_num, text='OCT', variable=rad_but,value=2).place(x=280, y=152, width=47, height=17)
-    hex_rad = ttk.Radiobutton(frame_num, text='HEX', variable=rad_but,value=3).place(x=280, y=169, width=47, height=17)
+    bin_rad = ttk.Radiobutton(frame_num, text='BIN', variable=rad_but, value=1).place(x=280, y=135, width=47, height=17)
+    oct_rad = ttk.Radiobutton(frame_num, text='OCT', variable=rad_but, value=2).place(x=280, y=152, width=47, height=17)
+    hex_rad = ttk.Radiobutton(frame_num, text='HEX', variable=rad_but, value=3).place(x=280, y=169, width=47, height=17)
 
     oper_btn_style = ttk.Style()
     oper_btn_style.configure("OneT.TButton", font = 'Arial 19')
