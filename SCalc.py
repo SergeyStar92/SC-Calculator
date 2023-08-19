@@ -6,6 +6,9 @@ from math import sqrt
 text_final_result = ''
 text_res_calc = ''
 text_calc = ''
+text_bin = ''
+text_oct = ''
+text_hex = ''
 
 final_result = ''
 res_calc = ''
@@ -80,6 +83,9 @@ def add_digit(digit):
     global mark_onedevx_1
     global mark_onedevx_2
     global res_calc
+    global text_bin
+    global text_oct
+    global text_hex
 
     pl = False
     mi = False
@@ -254,7 +260,7 @@ def add_digit(digit):
                         write_scr = write_scr[:-1]
 
             if num[0] == '0':
-                if num[-1] in '.123456789':
+                if num[-1] in '.123456789ABCDEF':
                     text_calc.set(f'')
                     num.append(str(digit))
                     text_calc.set(f"{''.join(num)}")
@@ -282,6 +288,9 @@ def add_digit(digit):
                     write_scr.append(str(digit))
 
                     text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
+                    text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
+                    text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
 
             else:
                 text_calc.set(f'')
@@ -292,10 +301,13 @@ def add_digit(digit):
                 write_scr.append(str(digit))
 
                 text_res_calc.set(f"{''.join(write_scr)}")
+                text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
+                text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
+                text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
 
     elif mark == True and num[-1] in '+-*/' and len(num) <= 16:
 
-        if str(digit) in '0123456789.':
+        if str(digit) in '0123456789ABCDEF.':
             text_calc.set(f'')
             num.append(str(digit))
             text_calc.set(f"{''.join(num)}")
@@ -1942,14 +1954,192 @@ def second_mode():
     global text_final_result
     global text_res_calc
     global text_calc
+    global text_bin
+    global rad_but
+    global text_hex
+    global text_oct
 
     text_final_result = StringVar()
     text_res_calc = StringVar()
     text_calc = StringVar()
+    text_bin = StringVar()
+    text_oct = StringVar()
+    text_hex = StringVar()
 
     text_final_result.set(f'')
     text_calc.set(f"0")
     text_res_calc.set(f"0")
+    text_bin.set(f"0")
+    text_oct.set(f"0")
+    text_hex.set(f"0")
+
+    def dec_numb():
+        print(write_scr)
+        oper_btn_style = ttk.Style()
+        oper_btn_style.configure("Dec1.TButton", font = 'Arial 19')
+        oper_btn_style.configure("Dec2.TButton", font = 'Arial 13 bold')
+        oper_btn_style.configure("Dec3.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec4.TButton", font = 'Arial 11')
+        oper_btn_style.configure("Dec6.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec7.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec8.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec9.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec10.TButton", font = 'Arial 14 bold')
+        oper_btn_style.configure("Dec11.TButton", font = 'Arial 12 bold',foreground = '#c1c1c1' )
+
+        ttk.Button(frame_button, text="+", style = "Dec6.TButton", command=lambda: add_operation('+')).place(x=262, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="—", style = "Dec2.TButton",command=lambda: add_operation('-')).place(x=262, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="✕", style = "Dec2.TButton",command=lambda: add_operation('*')).place(x=262, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=393, width=65, height=45)
+        ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=213, width=65, height=45)
+
+        ttk.Button(frame_button, text="0", style = "Dec1.TButton", command=lambda: add_digit(0)).place(x=132, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="1", style = "Dec1.TButton", command=lambda: add_digit(1)).place(x=67, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="2", style = "Dec1.TButton", command=lambda: add_digit(2)).place(x=132, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="3", style = "Dec1.TButton", command=lambda: add_digit(3)).place(x=197, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="4", style = "Dec1.TButton", command=lambda: add_digit(4)).place(x=67, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="5", style = "Dec1.TButton", command=lambda: add_digit(5)).place(x=132, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="6", style = "Dec1.TButton", command=lambda: add_digit(6)).place(x=197, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="7", style = "Dec1.TButton", command=lambda: add_digit(7)).place(x=67, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="8", style = "Dec1.TButton", command=lambda: add_digit(8)).place(x=132, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="9", style = "Dec1.TButton", command=lambda: add_digit(9)).place(x=197, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="A", style = "Dec11.TButton").place(x=2, y=213, width=65, height=37)
+        ttk.Button(frame_button, text="B", style = "Dec11.TButton").place(x=2, y=250, width=65, height=37)
+        ttk.Button(frame_button, text="C", style = "Dec11.TButton").place(x=2, y=287, width=65, height=37)
+        ttk.Button(frame_button, text="D", style = "Dec11.TButton").place(x=2, y=325, width=65, height=37)
+        ttk.Button(frame_button, text="E", style = "Dec11.TButton").place(x=2, y=363, width=65, height=37)
+        ttk.Button(frame_button, text="F", style = "Dec11.TButton").place(x=2, y=401, width=65, height=37)
+
+    def bin_numb():
+        #text_bin.set(str(bin(int(text_res_calc.get()))[2:]))
+        oper_btn_style = ttk.Style()
+        oper_btn_style.configure("Dec1.TButton", font = 'Arial 19')
+        oper_btn_style.configure("Dec2.TButton", font = 'Arial 13 bold')
+        oper_btn_style.configure("Dec3.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec4.TButton", font = 'Arial 11')
+        oper_btn_style.configure("Dec6.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec7.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec8.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec9.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec10.TButton", font = 'Arial 14 bold')
+        oper_btn_style.configure("Dec11.TButton", font = 'Arial 12 bold',foreground = '#c1c1c1' )
+
+        ttk.Button(frame_button, text="+", style = "Dec6.TButton", command=lambda: add_operation('+')).place(x=262, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="—", style = "Dec2.TButton",command=lambda: add_operation('-')).place(x=262, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="✕", style = "Dec2.TButton",command=lambda: add_operation('*')).place(x=262, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=393, width=65, height=45)
+        ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=213, width=65, height=45)
+
+        ttk.Button(frame_button, text="0", style = "Dec1.TButton", command=lambda: add_digit(0)).place(x=132, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="1", style = "Dec1.TButton", command=lambda: add_digit(1)).place(x=67, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="2", style = "Dec11.TButton").place(x=132, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="3", style = "Dec11.TButton").place(x=197, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="4", style = "Dec11.TButton").place(x=67, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="5", style = "Dec11.TButton").place(x=132, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="6", style = "Dec11.TButton").place(x=197, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="7", style = "Dec11.TButton").place(x=67, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="8", style = "Dec11.TButton").place(x=132, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="9", style = "Dec11.TButton").place(x=197, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="A", style = "Dec11.TButton").place(x=2, y=213, width=65, height=37)
+        ttk.Button(frame_button, text="B", style = "Dec11.TButton").place(x=2, y=250, width=65, height=37)
+        ttk.Button(frame_button, text="C", style = "Dec11.TButton").place(x=2, y=287, width=65, height=37)
+        ttk.Button(frame_button, text="D", style = "Dec11.TButton").place(x=2, y=325, width=65, height=37)
+        ttk.Button(frame_button, text="E", style = "Dec11.TButton").place(x=2, y=363, width=65, height=37)
+        ttk.Button(frame_button, text="F", style = "Dec11.TButton").place(x=2, y=401, width=65, height=37)
+
+    def oct_numb():
+        oper_btn_style = ttk.Style()
+        oper_btn_style.configure("Dec1.TButton", font = 'Arial 19')
+        oper_btn_style.configure("Dec2.TButton", font = 'Arial 13 bold')
+        oper_btn_style.configure("Dec3.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec4.TButton", font = 'Arial 11')
+        oper_btn_style.configure("Dec6.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec7.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec8.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec9.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec10.TButton", font = 'Arial 14 bold')
+        oper_btn_style.configure("Dec11.TButton", font = 'Arial 12 bold',foreground = '#c1c1c1' )
+
+        ttk.Button(frame_button, text="+", style = "Dec6.TButton", command=lambda: add_operation('+')).place(x=262, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="—", style = "Dec2.TButton",command=lambda: add_operation('-')).place(x=262, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="✕", style = "Dec2.TButton",command=lambda: add_operation('*')).place(x=262, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=393, width=65, height=45)
+        ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=213, width=65, height=45)
+
+        ttk.Button(frame_button, text="0", style = "Dec1.TButton", command=lambda: add_digit(0)).place(x=132, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="1", style = "Dec1.TButton", command=lambda: add_digit(1)).place(x=67, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="2", style = "Dec1.TButton", command=lambda: add_digit(2)).place(x=132, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="3", style = "Dec1.TButton", command=lambda: add_digit(3)).place(x=197, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="4", style = "Dec1.TButton", command=lambda: add_digit(4)).place(x=67, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="5", style = "Dec1.TButton", command=lambda: add_digit(5)).place(x=132, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="6", style = "Dec1.TButton", command=lambda: add_digit(6)).place(x=197, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="7", style = "Dec1.TButton", command=lambda: add_digit(7)).place(x=67, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="8", style = "Dec11.TButton").place(x=132, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="9", style = "Dec11.TButton").place(x=197, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="A", style = "Dec11.TButton").place(x=2, y=213, width=65, height=37)
+        ttk.Button(frame_button, text="B", style = "Dec11.TButton").place(x=2, y=250, width=65, height=37)
+        ttk.Button(frame_button, text="C", style = "Dec11.TButton").place(x=2, y=287, width=65, height=37)
+        ttk.Button(frame_button, text="D", style = "Dec11.TButton").place(x=2, y=325, width=65, height=37)
+        ttk.Button(frame_button, text="E", style = "Dec11.TButton").place(x=2, y=363, width=65, height=37)
+        ttk.Button(frame_button, text="F", style = "Dec11.TButton").place(x=2, y=401, width=65, height=37)
+
+
+    def hex_numb():
+        oper_btn_style = ttk.Style()
+        oper_btn_style.configure("Dec1.TButton", font = 'Arial 19')
+        oper_btn_style.configure("Dec2.TButton", font = 'Arial 13 bold')
+        oper_btn_style.configure("Dec3.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec4.TButton", font = 'Arial 11')
+        oper_btn_style.configure("Dec6.TButton", font = 'Arial 23')
+        oper_btn_style.configure("Dec7.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec8.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec9.TButton", font = 'Arial 14')
+        oper_btn_style.configure("Dec10.TButton", font = 'Arial 14 bold')
+        oper_btn_style.configure("Dec11.TButton", font = 'Arial 12 bold',foreground = '#c1c1c1' )
+
+        ttk.Button(frame_button, text="+", style = "Dec6.TButton", command=lambda: add_operation('+')).place(x=262, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="—", style = "Dec2.TButton",command=lambda: add_operation('-')).place(x=262, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="✕", style = "Dec2.TButton",command=lambda: add_operation('*')).place(x=262, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=393, width=65, height=45)
+        ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=213, width=65, height=45)
+        ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=213, width=65, height=45)
+
+        ttk.Button(frame_button, text="0", style = "Dec1.TButton", command=lambda: add_digit(0)).place(x=132, y=393, width=65, height=45)
+        ttk.Button(frame_button, text="1", style = "Dec1.TButton", command=lambda: add_digit(1)).place(x=67, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="2", style = "Dec1.TButton", command=lambda: add_digit(2)).place(x=132, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="3", style = "Dec1.TButton", command=lambda: add_digit(3)).place(x=197, y=348, width=65, height=45)
+        ttk.Button(frame_button, text="4", style = "Dec1.TButton", command=lambda: add_digit(4)).place(x=67, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="5", style = "Dec1.TButton", command=lambda: add_digit(5)).place(x=132, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="6", style = "Dec1.TButton", command=lambda: add_digit(6)).place(x=197, y=303, width=65, height=45)
+        ttk.Button(frame_button, text="7", style = "Dec1.TButton", command=lambda: add_digit(7)).place(x=67, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="8", style = "Dec1.TButton", command=lambda: add_digit(8)).place(x=132, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="9", style = "Dec1.TButton", command=lambda: add_digit(9)).place(x=197, y=258, width=65, height=45)
+        ttk.Button(frame_button, text="A", style = "Dec1.TButton", command=lambda: add_digit('A')).place(x=2, y=213, width=65, height=37)
+        ttk.Button(frame_button, text="B", style = "Dec1.TButton", command=lambda: add_digit('B')).place(x=2, y=250, width=65, height=37)
+        ttk.Button(frame_button, text="C", style = "Dec1.TButton", command=lambda: add_digit('C')).place(x=2, y=287, width=65, height=37)
+        ttk.Button(frame_button, text="D", style = "Dec1.TButton", command=lambda: add_digit('D')).place(x=2, y=325, width=65, height=37)
+        ttk.Button(frame_button, text="E", style = "Dec1.TButton", command=lambda: add_digit('E')).place(x=2, y=363, width=65, height=37)
+        ttk.Button(frame_button, text="F", style = "Dec1.TButton", command=lambda: add_digit('F')).place(x=2, y=401, width=65, height=37)
+
 
     frame_finnaly = Frame(root, background="red").place(x=0, y=0, width=328, height=40)
     frame_num = Frame(root, background="green").place(x=0, y=40, width=328, height=170)
@@ -1963,56 +2153,16 @@ def second_mode():
     calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=101, width=326, height=17)
     # <^^^^^^^^^^^^!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
 
-    dec_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=118, width=280, height=17)
-    bin_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=135, width=280, height=17)
-    oct_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=152, width=280, height=17)
-    hex_calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE).place(x=1, y=169, width=280, height=17)
-    dec_rad = ttk.Radiobutton(frame_num, text='DEC', variable=rad_but, value=0).place(x=280, y=118, width=47, height=17)
-    bin_rad = ttk.Radiobutton(frame_num, text='BIN', variable=rad_but, value=1).place(x=280, y=135, width=47, height=17)
-    oct_rad = ttk.Radiobutton(frame_num, text='OCT', variable=rad_but, value=2).place(x=280, y=152, width=47, height=17)
-    hex_rad = ttk.Radiobutton(frame_num, text='HEX', variable=rad_but, value=3).place(x=280, y=169, width=47, height=17)
+    dec_calc = ttk.Label(frame_num,textvariable=text_res_calc, font=("Arial", 10), anchor=SE).place(x=1, y=118, width=280, height=17)
+    bin_calc = ttk.Label(frame_num,textvariable=text_bin, font=("Arial", 10), anchor=SE).place(x=1, y=135, width=280, height=17)
+    oct_calc = ttk.Label(frame_num,textvariable=text_oct, font=("Arial", 10), anchor=SE).place(x=1, y=152, width=280, height=17)
+    hex_calc = ttk.Label(frame_num,textvariable=text_hex, font=("Arial", 10), anchor=SE).place(x=1, y=169, width=280, height=17)
+    dec_rad = ttk.Radiobutton(frame_num, text='DEC', variable=rad_but, value=0, command=lambda :dec_numb()).place(x=280, y=118, width=47, height=17)
+    bin_rad = ttk.Radiobutton(frame_num, text='BIN', variable=rad_but, value=1, command=lambda :bin_numb()).place(x=280, y=135, width=47, height=17)
+    oct_rad = ttk.Radiobutton(frame_num, text='OCT', variable=rad_but, value=2, command=lambda :oct_numb()).place(x=280, y=152, width=47, height=17)
+    hex_rad = ttk.Radiobutton(frame_num, text='HEX', variable=rad_but, value=3, command=lambda :hex_numb()).place(x=280, y=169, width=47, height=17)
 
-    oper_btn_style = ttk.Style()
-    oper_btn_style.configure("OneT.TButton", font = 'Arial 19')
-    oper_btn_style.configure("TwoT.TButton", font = 'Arial 13 bold')
-    oper_btn_style.configure("ThreeT.TButton", font = 'Arial 23')
-    oper_btn_style.configure("FourT.TButton", font = 'Arial 11')
-    oper_btn_style.configure("SixT.TButton", font = 'Arial 23')
-    oper_btn_style.configure("SevenT.TButton", font = 'Arial 14')
-    oper_btn_style.configure("EightT.TButton", font = 'Arial 14')
-    oper_btn_style.configure("NineT.TButton", font = 'Arial 14')
-    oper_btn_style.configure("TenT.TButton", font = 'Arial 14 bold')
-    oper_btn_style.configure("ElevenT.TButton", font = 'Arial 12 bold')
-
-    ttk.Button(frame_button, text="+", style = "SixT.TButton", command=lambda: add_operation('+')).place(x=262, y=348, width=65, height=45)
-    ttk.Button(frame_button, text="—", style = "TwoT.TButton",command=lambda: add_operation('-')).place(x=262, y=303, width=65, height=45)
-    ttk.Button(frame_button, text="✕", style = "TwoT.TButton",command=lambda: add_operation('*')).place(x=262, y=258, width=65, height=45)
-    ttk.Button(frame_button, text="÷", style = "SixT.TButton",command=lambda: add_operation('/')).place(x=262, y=213, width=65, height=45)
-    ttk.Button(frame_button, text="=", style = "ThreeT.TButton",command=lambda: rawno()).place(x=262, y=393, width=65, height=45)
-    ttk.Button(frame_button, text=".", style = "OneT.TButton", command=lambda: dot('.')).place(x=197, y=393, width=65, height=45)
-    ttk.Button(frame_button, text="+/-", style = "OneT.TButton", command=lambda: znak()).place(x=67, y=393, width=65, height=45)
-    ttk.Button(frame_button, text="⌫", style = "TenT.TButton", command=lambda: backspase()).place(x=197, y=213, width=65, height=45)
-    ttk.Button(frame_button, text="C", style = "SevenT.TButton", command=lambda: clear()).place(x=132, y=213, width=65, height=45)
-    ttk.Button(frame_button, text="CE", style = "SevenT.TButton", command=lambda: CE()).place(x=67, y=213, width=65, height=45)
-
-
-    ttk.Button(frame_button, text="0", style = "OneT.TButton", command=lambda: add_digit(0)).place(x=132, y=393, width=65, height=45)
-    ttk.Button(frame_button, text="1", style = "OneT.TButton", command=lambda: add_digit(1)).place(x=67, y=348, width=65, height=45)
-    ttk.Button(frame_button, text="2", style = "OneT.TButton", command=lambda: add_digit(2)).place(x=132, y=348, width=65, height=45)
-    ttk.Button(frame_button, text="3", style = "OneT.TButton", command=lambda: add_digit(3)).place(x=197, y=348, width=65, height=45)
-    ttk.Button(frame_button, text="4", style = "OneT.TButton", command=lambda: add_digit(4)).place(x=67, y=303, width=65, height=45)
-    ttk.Button(frame_button, text="5", style = "OneT.TButton", command=lambda: add_digit(5)).place(x=132, y=303, width=65, height=45)
-    ttk.Button(frame_button, text="6", style = "OneT.TButton", command=lambda: add_digit(6)).place(x=197, y=303, width=65, height=45)
-    ttk.Button(frame_button, text="7", style = "OneT.TButton", command=lambda: add_digit(7)).place(x=67, y=258, width=65, height=45)
-    ttk.Button(frame_button, text="8", style = "OneT.TButton", command=lambda: add_digit(8)).place(x=132, y=258, width=65, height=45)
-    ttk.Button(frame_button, text="9", style = "OneT.TButton", command=lambda: add_digit(9)).place(x=197, y=258, width=65, height=45)
-    ttk.Button(frame_button, text="A", style = "ElevenT.TButton", command=lambda: add_digit('A')).place(x=2, y=213, width=65, height=37)
-    ttk.Button(frame_button, text="B", style = "ElevenT.TButton", command=lambda: add_digit('B')).place(x=2, y=250, width=65, height=37)
-    ttk.Button(frame_button, text="C", style = "ElevenT.TButton", command=lambda: add_digit('C')).place(x=2, y=287, width=65, height=37)
-    ttk.Button(frame_button, text="D", style = "ElevenT.TButton", command=lambda: add_digit('D')).place(x=2, y=325, width=65, height=37)
-    ttk.Button(frame_button, text="E", style = "ElevenT.TButton", command=lambda: add_digit('E')).place(x=2, y=363, width=65, height=37)
-    ttk.Button(frame_button, text="F", style = "ElevenT.TButton", command=lambda: add_digit('F')).place(x=2, y=401, width=65, height=37)
-
+    dec_numb()
 
 start_mode()
 #Это новый коментарий!
