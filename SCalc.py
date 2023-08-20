@@ -67,6 +67,13 @@ style_sqr = 0
 mark_font_oper = False
 mark_font_sqr = False
 
+mark_num_sys = False
+
+mark_dec = False
+mark_bin = False
+mark_oct = False
+mark_hex = False
+
 
 def add_digit(digit):
     global num
@@ -88,6 +95,11 @@ def add_digit(digit):
     global text_oct
     global text_hex
     global text_dec
+    global mark_num_sys
+    global mark_hex
+    global mark_oct
+    global mark_bin
+    global mark_dec
 
     pl = False
     mi = False
@@ -290,11 +302,31 @@ def add_digit(digit):
                     write_scr.append(str(digit))
 
                     text_res_calc.set(f"{''.join(write_scr)}")
-                    #text_dec.set(''.join(write_scr))
-                    # text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
-                    # text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
-                    # text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
+                    if mark_num_sys == True:
+                        if mark_dec == True and mark_bin ==False and mark_oct == False and mark_hex == False:
+                            text_dec.set(''.join(write_scr))
+                            text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
+                            text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
+                            text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
 
+                        if mark_bin ==True and mark_dec == False and mark_oct == False and mark_hex == False:
+                            print(mark_bin)
+                            text_dec.set(int(''.join(write_scr), 2))
+                            text_bin.set(''.join(write_scr))
+                            text_oct.set(int(''.join(write_scr), 8))
+                            text_hex.set(str(int(''.join(write_scr), 16)).upper())
+
+                        if mark_oct == True and mark_dec == False and mark_bin == False and mark_hex == False:
+                            text_dec.set(int(''.join(write_scr), 8))
+                            text_bin.set(str(bin(int(''.join(write_scr), 8))[2:]))
+                            text_oct.set(''.join(write_scr))
+                            text_hex.set(str(hex(int(''.join(write_scr), 8))[2:]).upper())
+
+                        if mark_hex == True and mark_dec == False and mark_bin == False and mark_oct == False:
+                            text_dec.set(int(''.join(write_scr), 16))
+                            text_bin.set(str(bin(int(''.join(write_scr), 16))[2:]))
+                            text_oct.set(str(oct(int(''.join(write_scr), 16))[2:]))
+                            text_hex.set(str(''.join(write_scr)).upper())
             else:
                 text_calc.set(f'')
                 num.append(str(digit))
@@ -304,10 +336,33 @@ def add_digit(digit):
                 write_scr.append(str(digit))
 
                 text_res_calc.set(f"{''.join(write_scr)}")
-                #text_dec.set(''.join(write_scr))
-                # text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
-                # text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
-                # text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
+                if mark_num_sys == True:
+                    if mark_dec == True and mark_bin == False and mark_oct == False and mark_hex == False:
+                        text_dec.set(''.join(write_scr))
+                        text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
+                        text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
+                        text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
+
+                    if mark_bin == True and mark_dec == False and mark_oct == False and mark_hex == False:
+                        text_dec.set(int(''.join(write_scr), 2))
+                        text_bin.set(''.join(write_scr))
+                        text_oct.set(str(oct(int(''.join(write_scr), 2))[2:]))
+                        text_hex.set(str(hex(int(''.join(write_scr), 2))[2:]).upper())
+
+                    if mark_oct == True and mark_dec == False and mark_bin == False and mark_hex == False:
+                        text_dec.set(int(''.join(write_scr), 8))
+                        text_bin.set(str(bin(int(''.join(write_scr), 8))[2:]))
+                        text_oct.set(''.join(write_scr))
+                        text_hex.set(str(hex(int(''.join(write_scr), 8))[2:]).upper())
+
+                    if mark_hex == True and mark_dec == False and mark_bin == False and mark_oct == False:
+                        text_dec.set(int(''.join(write_scr), 16))
+                        text_bin.set(str(bin(int(''.join(write_scr), 16))[2:]))
+                        text_oct.set(str(oct(int(''.join(write_scr), 16))[2:]))
+                        text_hex.set(str(''.join(write_scr)).upper())
+
+
+
 
     elif mark == True and num[-1] in '+-*/' and len(num) <= 16:
 
@@ -1892,6 +1947,9 @@ def start_mode():
     global text_final_result
     global text_res_calc
     global text_calc
+    global rad_but
+
+    rad_but.set(0)
 
     text_final_result = StringVar()
     text_res_calc = StringVar()
@@ -1954,6 +2012,7 @@ def start_mode():
     ttk.Button(frame_button, text="7", style = "One.TButton", command=lambda: add_digit(7)).place(x=2, y=106, width=81, height=53)
     ttk.Button(frame_button, text="8", style = "One.TButton", command=lambda: add_digit(8)).place(x=83, y=106, width=81, height=53)
     ttk.Button(frame_button, text="9", style = "One.TButton", command=lambda: add_digit(9)).place(x=164, y=106, width=81, height=53)
+    mark_num_sys = False
 
 
 def second_mode():
@@ -1968,6 +2027,11 @@ def second_mode():
     global text_dec
     global text_hex
     global text_oct
+    global mark_num_sys
+    global mark_hex
+    global mark_oct
+    global mark_bin
+    global mark_dec
 
     text_final_result = StringVar()
     text_res_calc = StringVar()
@@ -1991,6 +2055,10 @@ def second_mode():
 
 
     def dec_numb():
+        global mark_hex
+        global mark_oct
+        global mark_bin
+        global mark_dec
         clb()
         text_res_calc.set(text_dec.get())
         oper_btn_style = ttk.Style()
@@ -2032,8 +2100,16 @@ def second_mode():
         ttk.Button(frame_button, text="D", style = "Dec11.TButton").place(x=2, y=113, width=65, height=38)
         ttk.Button(frame_button, text="E", style = "Dec11.TButton").place(x=2, y=150, width=65, height=38)
         ttk.Button(frame_button, text="F", style = "Dec11.TButton").place(x=2, y=187, width=65, height=38)
+        mark_dec = True
+        mark_bin = False
+        mark_oct = False
+        mark_hex = False
 
     def bin_numb():
+        global mark_hex
+        global mark_oct
+        global mark_bin
+        global mark_dec
         clb()
         text_res_calc.set(text_bin.get())
         oper_btn_style = ttk.Style()
@@ -2075,8 +2151,17 @@ def second_mode():
         ttk.Button(frame_button, text="D", style = "Dec11.TButton").place(x=2, y=113, width=65, height=38)
         ttk.Button(frame_button, text="E", style = "Dec11.TButton").place(x=2, y=150, width=65, height=38)
         ttk.Button(frame_button, text="F", style = "Dec11.TButton").place(x=2, y=187, width=65, height=38)
+        mark_bin = True
+        mark_oct = False
+        mark_hex = False
+        mark_dec = False
+
 
     def oct_numb():
+        global mark_hex
+        global mark_oct
+        global mark_bin
+        global mark_dec
         clb()
         text_res_calc.set(text_oct.get())
         oper_btn_style = ttk.Style()
@@ -2118,9 +2203,18 @@ def second_mode():
         ttk.Button(frame_button, text="D", style = "Dec11.TButton").place(x=2, y=113, width=65, height=38)
         ttk.Button(frame_button, text="E", style = "Dec11.TButton").place(x=2, y=150, width=65, height=38)
         ttk.Button(frame_button, text="F", style = "Dec11.TButton").place(x=2, y=187, width=65, height=38)
+        mark_oct = True
+        mark_hex = False
+        mark_dec = False
+        mark_bin = False
+
 
 
     def hex_numb():
+        global mark_hex
+        global mark_oct
+        global mark_bin
+        global mark_dec
         clb()
         text_res_calc.set(text_hex.get())
         oper_btn_style = ttk.Style()
@@ -2162,6 +2256,10 @@ def second_mode():
         ttk.Button(frame_button, text="D", style = "Dec1.TButton", command=lambda: add_digit('D')).place(x=2, y=113, width=65, height=38)
         ttk.Button(frame_button, text="E", style = "Dec1.TButton", command=lambda: add_digit('E')).place(x=2, y=150, width=65, height=38)
         ttk.Button(frame_button, text="F", style = "Dec1.TButton", command=lambda: add_digit('F')).place(x=2, y=187, width=65, height=38)
+        mark_hex = True
+        mark_dec = False
+        mark_bin = False
+        mark_oct = False
 
 
     frame_finnaly = Frame(root, background="red")
@@ -2201,6 +2299,7 @@ def second_mode():
     hex_rad.place(x=280, y=126, width=47, height=17)
 
     dec_numb()
+    mark_num_sys = True
 
 start_mode()
 #Это новый коментарий!
