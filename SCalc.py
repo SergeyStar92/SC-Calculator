@@ -962,6 +962,10 @@ def clear():
     text_final_result.set(f'')
     text_calc.set(f"0")
     text_res_calc.set(f"0")
+    text_dec.set(f"0")
+    text_bin.set(f"0")
+    text_oct.set(f"0")
+    text_hex.set(f"0")
     mark = False
     dotted = False
     mark_operation = False
@@ -1948,6 +1952,15 @@ def start_mode():
     global text_res_calc
     global text_calc
     global rad_but
+    global num
+    global write_scr
+    global write_result
+    global calculate
+
+    num = ['0']
+    write_scr = []
+    write_result = []
+    calculate = []
 
     rad_but.set(0)
 
@@ -2032,6 +2045,15 @@ def second_mode():
     global mark_oct
     global mark_bin
     global mark_dec
+    global num
+    global write_scr
+    global write_result
+    global calculate
+
+    num = ['0']
+    write_scr = []
+    write_result = []
+    calculate = []
 
     text_final_result = StringVar()
     text_res_calc = StringVar()
@@ -2079,7 +2101,7 @@ def second_mode():
         ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=0, width=65, height=45)
         ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=180, width=65, height=45)
         ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=180, width=65, height=45)
-        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=180, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec11.TButton").place(x=67, y=180, width=65, height=45)
         ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=0, width=65, height=45)
         ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=0, width=65, height=45)
         ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=0, width=65, height=45)
@@ -2130,7 +2152,7 @@ def second_mode():
         ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=0, width=65, height=45)
         ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=180, width=65, height=45)
         ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=180, width=65, height=45)
-        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=180, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec11.TButton").place(x=67, y=180, width=65, height=45)
         ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=0, width=65, height=45)
         ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=0, width=65, height=45)
         ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=0, width=65, height=45)
@@ -2182,7 +2204,7 @@ def second_mode():
         ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=0, width=65, height=45)
         ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=180, width=65, height=45)
         ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=180, width=65, height=45)
-        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=180, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec11.TButton").place(x=67, y=180, width=65, height=45)
         ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=0, width=65, height=45)
         ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=0, width=65, height=45)
         ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=0, width=65, height=45)
@@ -2235,7 +2257,7 @@ def second_mode():
         ttk.Button(frame_button, text="÷", style = "Dec6.TButton",command=lambda: add_operation('/')).place(x=262, y=0, width=65, height=45)
         ttk.Button(frame_button, text="=", style = "Dec3.TButton",command=lambda: rawno()).place(x=262, y=180, width=65, height=45)
         ttk.Button(frame_button, text=".", style = "Dec11.TButton").place(x=197, y=180, width=65, height=45)
-        ttk.Button(frame_button, text="+/-", style = "Dec1.TButton", command=lambda: znak()).place(x=67, y=180, width=65, height=45)
+        ttk.Button(frame_button, text="+/-", style = "Dec11.TButton").place(x=67, y=180, width=65, height=45)
         ttk.Button(frame_button, text="⌫", style = "Dec10.TButton", command=lambda: backspase()).place(x=197, y=0, width=65, height=45)
         ttk.Button(frame_button, text="C", style = "Dec7.TButton", command=lambda: clear()).place(x=132, y=0, width=65, height=45)
         ttk.Button(frame_button, text="CE", style = "Dec7.TButton", command=lambda: CE()).place(x=67, y=0, width=65, height=45)
