@@ -269,7 +269,7 @@ def add_digit(digit):
             for i in num:
                 if i in '/*-+':
 
-                    if num[-1] == '0' and num[-2] in '+-*/':
+                    if num[-1] == '0' and num[-2] in '+-*/' and mark_num_sys == False:
                         num = num[:-1]
                         write_scr = write_scr[:-1]
 
@@ -293,79 +293,193 @@ def add_digit(digit):
                     text_res_calc.set(f"{''.join(write_scr)}")
 
                 else:
-                    num = num[1:]
-                    write_scr = write_scr[1:]
-                    text_calc.set(f'')
-                    num.append(str(digit))
-                    text_calc.set(f"{''.join(num)}")
-                    text_res_calc.set(f'')
-                    write_scr.append(str(digit))
 
-                    text_res_calc.set(f"{''.join(write_scr)}")
                     if mark_num_sys == True:
                         if mark_dec == True and mark_bin ==False and mark_oct == False and mark_hex == False:
+
+                            num = num[1:]
+                            write_scr = write_scr[1:]
+                            text_calc.set(f'')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+                            text_res_calc.set(f'')
+                            write_scr.append(str(digit))
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                             text_dec.set(''.join(write_scr))
-                            text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
-                            text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
-                            text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
+                            text_bin.set(f"{str(bin(int(''.join(write_scr))))}")
+                            text_oct.set(f"{str(oct(int(''.join(write_scr))))}")
+                            text_hex.set(f"{str(hex(int(''.join(write_scr)))).upper()}")
 
                         if mark_bin ==True and mark_dec == False and mark_oct == False and mark_hex == False:
-                            print(mark_bin)
+
+                            num = num[1:]
+                            write_scr = write_scr[1:]
+                            text_calc.set(f'')
+                            num.append(f"0b{str(digit)}")
+                            text_calc.set(f"{''.join(num)}")
+                            text_res_calc.set(f'')
+                            write_scr.append(f"0b{str(digit)}")
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                             text_dec.set(int(''.join(write_scr), 2))
-                            text_bin.set(''.join(write_scr))
-                            text_oct.set(int(''.join(write_scr), 8))
-                            text_hex.set(str(int(''.join(write_scr), 16)).upper())
+                            text_bin.set(f"{''.join(write_scr)}")
+                            text_oct.set(f"{oct(int(''.join(write_scr),2))}")
+                            text_hex.set(f"{hex(int(''.join(write_scr), 2)).upper()}")
 
                         if mark_oct == True and mark_dec == False and mark_bin == False and mark_hex == False:
+                            num = num[1:]
+                            write_scr = write_scr[1:]
+                            text_calc.set(f'')
+                            num.append(f"0o{str(digit)}")
+                            text_calc.set(f"{''.join(num)}")
+                            text_res_calc.set(f'')
+                            write_scr.append(f"0o{str(digit)}")
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                             text_dec.set(int(''.join(write_scr), 8))
-                            text_bin.set(str(bin(int(''.join(write_scr), 8))[2:]))
-                            text_oct.set(''.join(write_scr))
-                            text_hex.set(str(hex(int(''.join(write_scr), 8))[2:]).upper())
+                            text_bin.set(f"{str(bin(int(''.join(write_scr), 8)))}")
+                            text_oct.set(f"{''.join(write_scr)}")
+                            text_hex.set(f"{str(hex(int(''.join(write_scr), 8))).upper()}")
 
                         if mark_hex == True and mark_dec == False and mark_bin == False and mark_oct == False:
+                            num = num[1:]
+                            write_scr = write_scr[1:]
+                            text_calc.set(f'')
+                            num.append(f"0X{str(digit)}")
+                            text_calc.set(f"{''.join(num)}")
+                            text_res_calc.set(f'')
+                            write_scr.append(f"0X{str(digit)}")
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                             text_dec.set(int(''.join(write_scr), 16))
-                            text_bin.set(str(bin(int(''.join(write_scr), 16))[2:]))
-                            text_oct.set(str(oct(int(''.join(write_scr), 16))[2:]))
-                            text_hex.set(str(''.join(write_scr)).upper())
+                            text_bin.set(f"{str(bin(int(''.join(write_scr), 16)))}")
+                            text_oct.set(f"{str(oct(int(''.join(write_scr), 16)))}")
+                            text_hex.set(f"{str(''.join(write_scr)).upper()}")
+                    else:
+                        num = num[1:]
+                        write_scr = write_scr[1:]
+                        text_calc.set(f'')
+                        num.append(str(digit))
+                        text_calc.set(f"{''.join(num)}")
+                        text_res_calc.set(f'')
+                        write_scr.append(str(digit))
+                        text_res_calc.set(f"{''.join(write_scr)}")
             else:
-                text_calc.set(f'')
-                num.append(str(digit))
-                text_calc.set(f"{''.join(num)}")
 
-                text_res_calc.set(f'')
-                write_scr.append(str(digit))
-
-                text_res_calc.set(f"{''.join(write_scr)}")
                 if mark_num_sys == True:
                     if mark_dec == True and mark_bin == False and mark_oct == False and mark_hex == False:
+
+                        text_calc.set(f'')
+                        num.append(str(digit))
+                        text_calc.set(f"{''.join(num)}")
+
+                        text_res_calc.set(f'')
+                        write_scr.append(str(digit))
+
+                        text_res_calc.set(f"{''.join(write_scr)}")
+
                         text_dec.set(''.join(write_scr))
-                        text_bin.set(str(bin(int(''.join(write_scr)))[2:]))
-                        text_oct.set(str(oct(int(''.join(write_scr)))[2:]))
-                        text_hex.set(str(hex(int(''.join(write_scr)))[2:]).upper())
+                        text_bin.set(f"{str(bin(int(''.join(write_scr))))}")
+                        text_oct.set(f"{str(oct(int(''.join(write_scr))))}")
+                        text_hex.set(f"{str(hex(int(''.join(write_scr)))).upper()}")
 
                     if mark_bin == True and mark_dec == False and mark_oct == False and mark_hex == False:
+                        if num[-1] in '+-*/':
+                            text_calc.set(f'')
+                            num.append('0b')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+
+                            text_res_calc.set(f'')
+                            write_scr.append('0b')
+                            write_scr.append(str(digit))
+
+                            text_res_calc.set(f"{''.join(write_scr)}")
+                        else:
+                            text_calc.set(f'')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+
+                            text_res_calc.set(f'')
+                            write_scr.append(str(digit))
+
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                         text_dec.set(int(''.join(write_scr), 2))
-                        text_bin.set(''.join(write_scr))
-                        text_oct.set(str(oct(int(''.join(write_scr), 2))[2:]))
-                        text_hex.set(str(hex(int(''.join(write_scr), 2))[2:]).upper())
+                        text_bin.set(f"{''.join(write_scr)}")
+                        text_oct.set(f"{str(oct(int(''.join(write_scr), 2)))}")
+                        text_hex.set(f"{str(hex(int(''.join(write_scr), 2))).upper()}")
 
                     if mark_oct == True and mark_dec == False and mark_bin == False and mark_hex == False:
+
+                        if num[-1] in '+-*/':
+                            text_calc.set(f'')
+                            num.append('0o')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+
+                            text_res_calc.set(f'')
+                            write_scr.append('0o')
+                            write_scr.append(str(digit))
+
+                            text_res_calc.set(f"{''.join(write_scr)}")
+                        else:
+                            text_calc.set(f'')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+
+                            text_res_calc.set(f'')
+                            write_scr.append(str(digit))
+
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                         text_dec.set(int(''.join(write_scr), 8))
-                        text_bin.set(str(bin(int(''.join(write_scr), 8))[2:]))
-                        text_oct.set(''.join(write_scr))
-                        text_hex.set(str(hex(int(''.join(write_scr), 8))[2:]).upper())
+                        text_bin.set(f"{str(bin(int(''.join(write_scr), 8)))}")
+                        text_oct.set(f"{''.join(write_scr)}")
+                        text_hex.set(f"{str(hex(int(''.join(write_scr), 8))).upper()}")
 
                     if mark_hex == True and mark_dec == False and mark_bin == False and mark_oct == False:
+
+                        if num[-1] in '+-*/':
+                            text_calc.set(f'')
+                            num.append('0X')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+
+                            text_res_calc.set(f'')
+                            write_scr.append('0X')
+                            write_scr.append(str(digit))
+
+                            text_res_calc.set(f"{''.join(write_scr)}")
+                        else:
+                            text_calc.set(f'')
+                            num.append(str(digit))
+                            text_calc.set(f"{''.join(num)}")
+
+                            text_res_calc.set(f'')
+                            write_scr.append(str(digit))
+
+                            text_res_calc.set(f"{''.join(write_scr)}")
+
                         text_dec.set(int(''.join(write_scr), 16))
-                        text_bin.set(str(bin(int(''.join(write_scr), 16))[2:]))
-                        text_oct.set(str(oct(int(''.join(write_scr), 16))[2:]))
-                        text_hex.set(str(''.join(write_scr)).upper())
+                        text_bin.set(f"{str(bin(int(''.join(write_scr), 16)))}")
+                        text_oct.set(f"{str(oct(int(''.join(write_scr), 16)))}")
+                        text_hex.set(f"{''.join(write_scr)}")
 
 
+                else:
+                        text_calc.set(f'')
+                        num.append(str(digit))
+                        text_calc.set(f"{''.join(num)}")
+
+                        text_res_calc.set(f'')
+                        write_scr.append(str(digit))
+
+                        text_res_calc.set(f"{''.join(write_scr)}")
 
 
     elif mark == True and num[-1] in '+-*/' and len(num) <= 16:
-
         if str(digit) in '0123456789ABCDEF.':
             text_calc.set(f'')
             num.append(str(digit))
@@ -383,16 +497,77 @@ def add_digit(digit):
         write_scr = []
         write_result = []
         calculate = []
-        if str(digit) in '0123456789.':
-            text_calc.set(f'')
-            num.append(str(digit))
-            text_calc.set(f"{''.join(num)}")
+        if str(digit) in '0123456789.ABCDEF':
+            if mark_num_sys == True:
+                if mark_dec == True:
+                    text_calc.set(f'')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
 
-            text_res_calc.set(f'')
-            write_scr.append(str(digit))
+                    text_res_calc.set(f'')
+                    write_scr.append(str(digit))
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_dec.set(''.join(write_scr))
+                    text_bin.set(f"{str(bin(int(''.join(write_scr))))}")
+                    text_oct.set(f"{str(oct(int(''.join(write_scr))))}")
+                    text_hex.set(f"{str(hex(int(''.join(write_scr)))).upper()}")
 
-            text_res_calc.set(f"{''.join(write_scr)}")
-            mark = False
+                if mark_bin == True:
+                    text_calc.set(f'')
+                    num.append('0b')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
+
+                    text_res_calc.set(f'')
+                    write_scr.append('0b')
+                    write_scr.append(str(digit))
+
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(f"{''.join(write_scr)}")
+                    text_oct.set(f"{str(oct(int(''.join(write_scr), 2)))}")
+                    text_hex.set(f"{str(hex(int(''.join(write_scr), 2))).upper()}")
+
+                if mark_oct == True:
+                    text_calc.set(f'')
+                    num.append('0o')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
+
+                    text_res_calc.set(f'')
+                    write_scr.append('0o')
+                    write_scr.append(str(digit))
+
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(f"{str(bin(int(''.join(write_scr), 8)))}")
+                    text_oct.set(f"{''.join(write_scr)}")
+                    text_hex.set(f"{str(hex(int(''.join(write_scr), 8))).upper()}")
+
+                if mark_hex == True:
+                    text_calc.set(f'')
+                    num.append('0X')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
+
+                    text_res_calc.set(f'')
+                    write_scr.append('0X')
+                    write_scr.append(str(digit))
+
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(f"{str(bin(int(''.join(write_scr), 16)))}")
+                    text_oct.set(f"{str(oct(int(''.join(write_scr), 16)))}")
+                    text_hex.set(f"{''.join(write_scr)}")
+
+                mark = False
+            else:
+                text_calc.set(f'')
+                num.append(str(digit))
+                text_calc.set(f"{''.join(num)}")
+
+                text_res_calc.set(f'')
+                write_scr.append(str(digit))
+
+                text_res_calc.set(f"{''.join(write_scr)}")
+                mark = False
 
     elif mark == True and len(num) > 16:
         text_final_result.set('')
@@ -563,7 +738,20 @@ def add_operation(operation):
         if num[0] in '+-*/':
             num.pop(0)
 
-        calculate = eval(''.join(num))
+        if mark_num_sys == True:
+            if mark_dec == True:
+                calculate = eval(''.join(num))
+            if mark_bin == True:
+                calculate = eval(''.join(num))
+                calculate = bin(calculate)
+            if mark_oct == True:
+                calculate = eval(''.join(num))
+                calculate = oct(calculate)
+            if mark_hex == True:
+                calculate = eval(''.join(num))
+                calculate = hex(calculate).upper()
+        else:
+            calculate = eval(''.join(num))
 
         text_calc.set(f"{calculate}")
 
@@ -573,7 +761,6 @@ def add_operation(operation):
             calculate = '{:g}'.format(calculate)
             style_oper = len(str(calculate))
 
-        text_res_calc.set(f"{calculate}")
         num = [str(calculate)]
         if mark_sqr_1 == True and mark_sqrt_1 == False and mark_onedevx_1 == False:
             text_final_result.set(f'({sqr_num_1})²{operation}')
@@ -582,7 +769,18 @@ def add_operation(operation):
         if mark_onedevx_1 == True and mark_sqrt_1 == False and mark_sqr_1 == False:
             text_final_result.set(f'1/({onedevx_num_1}){operation}')
         if mark_sqr_1 == False and mark_sqrt_1 == False and mark_onedevx_1 == False:
-            text_final_result.set(f'{calculate}{operation}')
+            if mark_num_sys == True:
+                if mark_dec == True:
+                    text_final_result.set(f'{calculate}{operation}')
+                if mark_bin == True:
+                    text_final_result.set(f'{calculate}{operation}')
+                if mark_oct == True:
+                    text_final_result.set(f'{calculate}{operation}')
+                if mark_hex == True:
+                    text_final_result.set(f'{calculate.upper()}{operation}')
+            else:
+                text_res_calc.set(f"{calculate}")
+                text_final_result.set(f'{calculate}{operation}')
 
         num.append(str(operation))
         text_calc.set(f"{''.join(num)}")
@@ -632,6 +830,11 @@ def rawno():
 
     global style_eqv
     global mark_error
+
+    global text_bin
+    global text_oct
+    global text_hex
+    global text_dec
 
     try:
         if num[-1] in '-+/*':
@@ -913,11 +1116,26 @@ def rawno():
 
 
         #общий вывод//////////////////////////////////////////////////////////////
+        if mark_num_sys == True:
+            if mark_dec == True:
+                text_res_calc.set(f"{'{:,}'.format(calculate)}")
+            if mark_bin == True:
+                text_res_calc.set(f"{bin(calculate)}")
+            if mark_oct == True:
+                text_res_calc.set(f"{oct(calculate)}")
+            if mark_hex == True:
+                text_res_calc.set(f"{hex(calculate)}")
 
-        style_eqv = len(str('{:,}'.format(calculate)))
+            text_dec.set(int(calculate))
+            text_bin.set(bin(calculate))
+            text_oct.set(oct(calculate))
+            text_hex.set(hex(calculate).upper())
 
-        text_calc.set(f"{'{:,}'.format(calculate)}")
-        text_res_calc.set(f"{'{:,}'.format(calculate)}")
+        else:
+            style_eqv = len(str('{:,}'.format(calculate)))
+
+            text_calc.set(f"{'{:,}'.format(calculate)}")
+            text_res_calc.set(f"{'{:,}'.format(calculate)}")
 
         mark = True
         dotted = False
@@ -955,6 +1173,12 @@ def clear():
     global mark_onedevx_1
     global mark_onedevx_2
 
+    if mark_num_sys == True:
+        text_dec.set(f"0")
+        text_bin.set(f"0")
+        text_oct.set(f"0")
+        text_hex.set(f"0")
+
     num = ['0']
     write_scr = []
     write_result = []
@@ -962,10 +1186,7 @@ def clear():
     text_final_result.set(f'')
     text_calc.set(f"0")
     text_res_calc.set(f"0")
-    text_dec.set(f"0")
-    text_bin.set(f"0")
-    text_oct.set(f"0")
-    text_hex.set(f"0")
+
     mark = False
     dotted = False
     mark_operation = False
@@ -2081,6 +2302,7 @@ def second_mode():
         global mark_oct
         global mark_bin
         global mark_dec
+        clear()
         clb()
         text_res_calc.set(text_dec.get())
         oper_btn_style = ttk.Style()
@@ -2132,6 +2354,7 @@ def second_mode():
         global mark_oct
         global mark_bin
         global mark_dec
+        clear()
         clb()
         text_res_calc.set(text_bin.get())
         oper_btn_style = ttk.Style()
@@ -2184,6 +2407,7 @@ def second_mode():
         global mark_oct
         global mark_bin
         global mark_dec
+        clear()
         clb()
         text_res_calc.set(text_oct.get())
         oper_btn_style = ttk.Style()
@@ -2231,12 +2455,12 @@ def second_mode():
         mark_bin = False
 
 
-
     def hex_numb():
         global mark_hex
         global mark_oct
         global mark_bin
         global mark_dec
+        clear()
         clb()
         text_res_calc.set(text_hex.get())
         oper_btn_style = ttk.Style()
