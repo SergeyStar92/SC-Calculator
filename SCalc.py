@@ -480,16 +480,77 @@ def add_digit(digit):
 
 
     elif mark == True and num[-1] in '+-*/' and len(num) <= 16:
-        if str(digit) in '0123456789ABCDEF.':
-            text_calc.set(f'')
-            num.append(str(digit))
-            text_calc.set(f"{''.join(num)}")
+        if str(digit) in '0123456789.ABCDEF':
+            if mark_num_sys == True:
+                if mark_dec == True:
+                    text_calc.set(f'')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
 
-            text_res_calc.set(f'')
-            write_scr.append(str(digit))
+                    text_res_calc.set(f'')
+                    write_scr.append(str(digit))
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_dec.set(''.join(write_scr))
+                    text_bin.set(f"{str(bin(int(''.join(write_scr))))}")
+                    text_oct.set(f"{str(oct(int(''.join(write_scr))))}")
+                    text_hex.set(f"{str(hex(int(''.join(write_scr)))).upper()}")
 
-            text_res_calc.set(f"{''.join(write_scr)}")
-            mark = False
+                if mark_bin == True:
+                    text_calc.set(f'')
+                    num.append('0b')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
+
+                    text_res_calc.set(f'')
+                    write_scr.append('0b')
+                    write_scr.append(str(digit))
+
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(f"{''.join(write_scr)}")
+                    text_oct.set(f"{str(oct(int(''.join(write_scr), 2)))}")
+                    text_hex.set(f"{str(hex(int(''.join(write_scr), 2))).upper()}")
+
+                if mark_oct == True:
+                    text_calc.set(f'')
+                    num.append('0o')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
+
+                    text_res_calc.set(f'')
+                    write_scr.append('0o')
+                    write_scr.append(str(digit))
+
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(f"{str(bin(int(''.join(write_scr), 8)))}")
+                    text_oct.set(f"{''.join(write_scr)}")
+                    text_hex.set(f"{str(hex(int(''.join(write_scr), 8))).upper()}")
+
+                if mark_hex == True:
+                    text_calc.set(f'')
+                    num.append('0X')
+                    num.append(str(digit))
+                    text_calc.set(f"{''.join(num)}")
+
+                    text_res_calc.set(f'')
+                    write_scr.append('0X')
+                    write_scr.append(str(digit))
+
+                    text_res_calc.set(f"{''.join(write_scr)}")
+                    text_bin.set(f"{str(bin(int(''.join(write_scr), 16)))}")
+                    text_oct.set(f"{str(oct(int(''.join(write_scr), 16)))}")
+                    text_hex.set(f"{''.join(write_scr)}")
+
+                mark = False
+            else:
+                text_calc.set(f'')
+                num.append(str(digit))
+                text_calc.set(f"{''.join(num)}")
+
+                text_res_calc.set(f'')
+                write_scr.append(str(digit))
+
+                text_res_calc.set(f"{''.join(write_scr)}")
+                mark = False
 
     elif mark == True and len(num) <= 16:
         text_final_result.set('')
@@ -1124,7 +1185,7 @@ def rawno():
             if mark_oct == True:
                 text_res_calc.set(f"{oct(calculate)}")
             if mark_hex == True:
-                text_res_calc.set(f"{hex(calculate)}")
+                text_res_calc.set(f"{hex(calculate).upper()}")
 
             text_dec.set(int(calculate))
             text_bin.set(bin(calculate))
