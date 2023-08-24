@@ -2569,11 +2569,11 @@ def second_mode():
         mark_oct = False
 
 
-    frame_finnaly = Frame(root, background="red")
+    frame_finnaly = Frame(root)
     frame_finnaly.place(x=0, y=0, width=328, height=38)
-    frame_num = Frame(root, background="green")
+    frame_num = Frame(root)
     frame_num.place(x=0, y=40, width=328, height=170)
-    frame_button = Frame(root, background="blue")
+    frame_button = Frame(root)
     frame_button.place(x=0, y=210, width=328, height=500) #height=230
 
     #print(frame_button.winfo_children())
@@ -2584,8 +2584,8 @@ def second_mode():
     res_calc.place(x=1, y=0, width=326, height=58)
 
     # <------------!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!-------------------------------|
-    calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE)
-    calc.place(x=1, y=58, width=326, height=17)
+    # calc = ttk.Label(frame_num,textvariable=text_calc, font=("Arial", 10), anchor=SE)
+    # calc.place(x=1, y=58, width=326, height=17)
     # <^^^^^^^^^^^^!!!!!Это общая строка для отладки! Не удалять!!!!!!!!!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|
 
     dec_calc = ttk.Label(frame_num,textvariable=text_dec, font=("Arial", 10), anchor=SE)
